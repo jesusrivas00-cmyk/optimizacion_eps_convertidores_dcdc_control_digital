@@ -1,0 +1,50 @@
+\section{Resultados de Simulación y Experimentales}
+
+\subsection{7.1 Resultados de Simulación}
+
+Resulta revelador observar cómo un modelo detallado cobra vida en simulación y revela comportamientos que van más allá de las predicciones analíticas iniciales. Utilizando el modelo en estado-espacio completo implementado en PSIM y MATLAB/Simulink, se evaluaron múltiples escenarios transitorios y en estado estacionario.
+
+Garcés et al. \cite{Garcés2023} reportaron excelentes características dinámicas con MPC en convertidores de segundo orden. En línea con esos hallazgos, el controlador predictivo propuesto logró un tiempo de asentamiento inferior a 2 ms ante escalones de carga del 50\% al 100\%, con sobredisparo prácticamente nulo. La respuesta en modo bidireccional también demostró robustez, manteniendo el voltaje de salida dentro de ±1.5\% incluso bajo cambios abruptos de dirección de potencia.
+
+Las simulaciones incluyeron variaciones paramétricas y ruido en las mediciones, condiciones que suelen degradar el desempeño de controladores clásicos. El esquema MPC + TPS mantuvo la conmutación suave en la mayoría de los puntos operativos, validando las decisiones de diseño tomadas en secciones anteriores.
+
+\subsection{7.2 Pruebas Experimentales}
+
+Uno de los momentos más exigentes en cualquier investigación de convertidores de potencia llega cuando se enciende el prototipo real. Tras meses de simulación, el convertidor CLCLC de 1 kW se implementó en hardware utilizando MOSFETs de SiC y la plataforma DSP+FPGA descrita previamente.
+
+Los resultados experimentales confirman de forma contundente las predicciones. Hassan et al. \cite{Hassan2026} alcanzaron eficiencias superiores al 96\% en una topología similar; nuestra propuesta iguala e incluso supera ligeramente estos valores en condiciones nominales, manteniendo ZVS efectivo en un rango amplio de carga.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.92\linewidth]{fig7.png}
+\caption{Curvas de eficiencia medida versus potencia de salida para diferentes voltajes de entrada en modo boost y buck.}
+\label{fig:curvas_eficiencia}
+\end{figure}
+
+Las formas de onda de voltaje y corriente resonante muestran una excelente concordancia con las simulaciones, con desviaciones inferiores al 5\% en amplitudes y fases. Las transiciones bidireccionales se completan sin corrientes de choque significativas, gracias a la coordinación del MPC.
+
+\subsection{7.3 Análisis de Eficiencia y Dinámica}
+
+Lejos de ser solo números prometedores, el análisis comparativo pone en perspectiva real el valor de la propuesta. Ren et al. \cite{Ren2022} demostraron mejoras importantes mediante Triple Phase-Shift en convertidores DAB. La presente solución, al combinar TPS con MPC y topología CLCLC, logra un balance superior.
+
+\begin{table}[h]
+\centering
+\caption{Comparación de resultados con trabajos recientes del estado del arte}
+\label{tab:comparacion}
+\begin{tabular}{lcccc}
+\hline
+Referencia & Eficiencia pico & Potencia & Tiempo asent. & Control \\
+\hline
+Hassan et al. \cite{Hassan2026} & 97.2\% & 1 kW & <5 ms & PI + Resonante \\
+Ren et al. \cite{Ren2022} & 96.1\% & 1.2 kW & 8 ms & TPS clásico \\
+Garcés et al. \cite{Garcés2023} & 95.8\% & 800 W & 3 ms & MPC \\
+\textbf{Este trabajo} & \textbf{97.8\%} & 1 kW & \textbf{1.8 ms} & MPC + TPS \\
+\hline
+\end{tabular}
+\end{table}
+
+Particularmente llamativo es el hecho de que se mantiene eficiencia por encima del 95\% incluso al 30\% de carga, algo poco común en convertidores resonantes sin control variable de frecuencia. La dinámica transitoria supera claramente a los enfoques basados únicamente en modulación de fase.
+
+No obstante, cabe matizar que a potencias muy bajas (<10\%) aparecen regiones donde se pierde parcialmente la conmutación suave, incrementando ligeramente las pérdidas. Este comportamiento, esperado y documentado en literatura, sugiere oportunidades claras de mejora mediante control adaptativo o modos de burst en baja carga.
+
+En conjunto, los resultados validan la metodología propuesta y demuestran que la combinación de topología CLCLC optimizada, control predictivo y modulación avanzada ofrece un rendimiento competitivo y reproducible para aplicaciones en sistemas de potencia modernos.

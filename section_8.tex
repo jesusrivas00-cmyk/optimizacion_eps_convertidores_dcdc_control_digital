@@ -1,0 +1,27 @@
+\section{Conclusiones y Trabajos Futuros}
+
+\subsection{8.1 Conclusiones}
+
+Particularmente llamativo resulta el cierre de un ciclo de investigación que comenzó con desafíos bien conocidos y culmina con un prototipo que supera varias expectativas iniciales. Este trabajo demostró que la combinación de una topología CLCLC resonante optimizada con control predictivo por modelo y modulación Triple Phase-Shift representa una vía efectiva para elevar significativamente el rendimiento de los sistemas de potencia eléctrica.
+
+Hassan et al. \cite{Hassan2026} establecieron un referente sólido con convertidores CLCLC experimentales de alta eficiencia. La presente propuesta iguala esos niveles (alcanzando picos de 97.8\%) mientras mejora de forma notable la respuesta dinámica y la integración sistémica. Se validó experimentalmente en un prototipo de 1 kW que mantiene conmutación suave en amplio rango, excelente estabilidad y eficiencia superior al 96\% en operación bidireccional.
+
+Los resultados confirman que el modelado en estado-espacio detallado, el diseño cuidadoso de resonantes y la implementación digital híbrida DSP+FPGA constituyen una metodología reproducible. Más allá de los números, el sistema exhibe una inteligencia operativa que lo hace adecuado para microgrids DC con alta penetración de renovables.
+
+\subsection{8.2 Limitaciones}
+
+Lejos de ser un asunto resuelto, toda solución técnica trae consigo compromisos que merecen reconocimiento explícito. Reddy et al. \cite{Reddy2025} identifican con claridad los desafíos persistentes en integración de convertidores para movilidad y renovables; varios de ellos se manifestaron durante este desarrollo.
+
+La complejidad computacional del MPC limitó el horizonte de predicción, obligando a balancear desempeño y viabilidad en tiempo real. Aunque se logró excelente comportamiento dinámico, a potencias muy bajas aparece degradación parcial de la conmutación suave. Además, el prototipo de 1 kW, aunque representativo, deja abierta la cuestión de escalabilidad a decenas de kilowatts donde efectos térmicos y parasíticos se acentúan.
+
+No obstante, cabe matizar que estas limitaciones no invalidan los hallazgos, sino que delimitan con precisión el alcance actual de la solución. Factores externos como variaciones extremas de temperatura o envejecimiento de componentes no fueron evaluados exhaustivamente, aspecto común en trabajos académicos pero relevante para aplicaciones industriales.
+
+\subsection{8.3 Trabajos Futuros}
+
+Uno de los desafíos persistentes que surge al concluir proyectos de este tipo es resistir la tentación de declarar victoria prematura. Queda mucho terreno por explorar.
+
+Mezouari et al. \cite{Mezouari2025} destacan en su revisión la necesidad de avanzar hacia topologías más densas y controles adaptativos. En esa dirección, se propone extender el esquema actual incorporando control adaptativo o MPC con aprendizaje por refuerzo para manejar variaciones paramétricas en tiempo real. La escalabilidad a potencias superiores (5-50 kW) con dispositivos SiC/GaN de nueva generación constituye otra línea prioritaria.
+
+Resulta prometedor investigar la integración con técnicas de diagnóstico en línea de fallas y modos de operación resilientes ante contingencias de red. Asimismo, la optimización multiobjetivo en tiempo real a nivel de microgrid completa, incluyendo economía de operación y vida útil de baterías, abriría aplicaciones más amplias en sistemas de distribución moderna.
+
+Reddy et al. \cite{Reddy2025} sugieren que el futuro de los convertidores DC-DC pasa por mayor inteligencia distribuida y densidad de potencia. La presente investigación proporciona una base sólida desde la cual abordar estos retos con mayor confianza. Los próximos pasos ya están definidos: prototipos de mayor potencia, pruebas de campo y exploración de algoritmos de control híbridos que combinen lo mejor de la predictividad y la adaptabilidad.

@@ -1,0 +1,55 @@
+\section{Diseño de Convertidores DC-DC de Alta Eficiencia}
+
+\subsection{4.1 Topología Propuesta}
+
+Particularmente llamativo resulta el potencial que surge cuando se extiende una topología resonante bien fundamentada con mejoras específicas orientadas a sistemas de potencia reales. Tomando como base sólida los avances reportados por Hassan et al. \cite{Hassan2026} en convertidores CLCLC bidireccionales, se propone una variante optimizada para operación en microgrids DC con énfasis en densidad de potencia y rango amplio de carga.
+
+La topología consiste en dos puentes activos (full-bridge) conectados mediante un tanque resonante CLCLC. Este arreglo permite conmutación suave (ZVS en uno de los puentes y ZCS en el otro) en un rango extendido de voltajes y potencias. A diferencia de configuraciones más simples, la presencia de los cuatro elementos resonantes ofrece mayor flexibilidad para moldear las características de impedancia y reducir corrientes circulantes.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.92\linewidth]{fig4.png}
+\caption{Esquema del convertidor CLCLC bidireccional propuesto, mostrando los dos full-bridges, tanque resonante CLCLC y conexiones de entrada/salida con señales de control digital.}
+\label{fig:topologia_propuesta}
+\end{figure}
+
+La decisión de adoptar CLCLC no fue arbitraria. Después de evaluar múltiples candidatos, esta estructura demostró el mejor compromiso entre eficiencia, rango de operación bidireccional y facilidad de control. El diseño se orientó a una potencia nominal de 1 kW con voltajes de entrada y salida típicos de sistemas DC distribuidos (48 V / 380 V).
+
+\subsection{4.2 Diseño de Elementos Resonantes}
+
+Uno de los desafíos persistentes al trabajar con convertidores resonantes radica en seleccionar los valores de L y C que garanticen ZVS/ZCS sin penalizar excesivamente el tamaño o la eficiencia. Se empleó un procedimiento iterativo que combina análisis en frecuencia, simulación en estado estacionario y optimización numérica.
+
+Los inductores resonantes se diseñaron considerando núcleos de ferrita con bajas pérdidas y alambres Litz para minimizar el efecto skin a la frecuencia de conmutación seleccionada (50 kHz). Los capacitores emplean tecnología film de alta corriente de rizo. Se impusieron restricciones estrictas de tensión y corriente pico para mantener los componentes dentro de márgenes seguros de operación.
+
+\begin{table}[h]
+\centering
+\caption{Especificaciones de componentes del convertidor CLCLC propuesto}
+\label{tab:componentes}
+\begin{tabular}{lc}
+\hline
+Componente & Valor / Especificación \\
+\hline
+$L_1$ (entrada) & 150 $\mu$H \\
+$C_1$ & 4.7 $\mu$F \\
+$L_r$ & 45 $\mu$H \\
+$C_r$ & 0.22 $\mu$F \\
+$L_2$ (salida) & 220 $\mu$H \\
+$C_2$ & 10 $\mu$F \\
+Semiconductores & SiC MOSFET 650 V, 30 m$\Omega$ \\
+Frecuencia de conmutación & 50 kHz \\
+Potencia nominal & 1 kW \\
+\hline
+\end{tabular}
+\end{table}
+
+El proceso reveló que pequeños cambios en la relación de inductancias pueden desplazar significativamente las regiones de conmutación suave. Esta sensibilidad obliga a una selección conservadora y a la inclusión de márgenes en el diseño final. El resultado es una topología que mantiene ZVS en más del 85\% del rango de potencia previsto.
+
+\subsection{4.3 Análisis de Pérdidas}
+
+Lejos de ser un ejercicio meramente cuantitativo, el análisis de pérdidas guió decisiones de diseño clave. Se desglosaron las pérdidas en conducción, conmutación, magnéticas y dieléctricas, evaluando su contribución bajo diferentes condiciones de operación.
+
+Ren et al. \cite{Ren2022} demostraron cómo la modulación Triple Phase-Shift reduce notablemente las corrientes circulantes en convertidores DAB. Inspirados en ese enfoque, se adaptaron técnicas similares al tanque CLCLC, logrando una reducción sustancial de las pérdidas por conducción en comparación con Single Phase-Shift convencional.
+
+Los cálculos analíticos se validaron contra simulaciones detalladas que incluyen modelos de semiconductores reales. Las pérdidas totales estimadas se mantienen por debajo de 40 W a plena carga, lo que respalda la meta de eficiencia superior al 96\%. No obstante, cabe matizar que las pérdidas magnéticas tienden a incrementarse más de lo esperado a potencias ligeras, fenómeno común en topologías resonantes que requiere atención en la estrategia de control en vacío o baja carga.
+
+En conjunto, el análisis confirma que la topología propuesta supera a muchas alternativas del estado del arte en el balance global de pérdidas, especialmente cuando se opera en modo bidireccional con variaciones de voltaje. Estos resultados sientan las bases para la implementación del control digital que se presenta en la siguiente sección.

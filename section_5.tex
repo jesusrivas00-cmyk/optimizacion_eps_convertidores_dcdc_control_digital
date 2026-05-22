@@ -1,0 +1,41 @@
+\section{Control Digital Avanzado}
+
+\subsection{5.1 Control Predictivo por Modelo}
+
+Resulta revelador observar cómo el control predictivo por modelo transforma radicalmente el comportamiento de convertidores resonantes que, de otro modo, exhibirían dinámicas complejas y difíciles de manejar. Tras múltiples iteraciones con controladores convencionales, quedó evidente que se necesitaba un enfoque capaz de anticipar el comportamiento futuro del sistema.
+
+Se implementó un MPC de horizonte finito inspirado en los esquemas unificados presentados por Guo et al. \cite{Guo2025_MPC}. La función de costo se definió para minimizar el error de seguimiento de voltaje y corriente mientras penaliza variaciones bruscas en las acciones de control:
+
+\begin{equation}
+\label{eq:cost_function}
+J = \sum_{i=1}^{N_p} \| \mathbf{y}(k+i) - \mathbf{y}_{ref} \|^2_Q + \sum_{i=0}^{N_c-1} \| \Delta \mathbf{u}(k+i) \|^2_R
+\end{equation}
+
+Esta formulación (Eq. 2) prioriza tanto el seguimiento preciso como la suavidad en las señales de modulación, aspecto crítico para mantener la conmutación suave en la topología CLCLC. El MPC demuestra excelente rechazo a perturbaciones de carga y variaciones de voltaje de entrada, comportamientos que los controladores PI tradicionales rara vez igualan sin ajustes constantes.
+
+\subsection{5.2 Triple Phase-Shift Modulation}
+
+Uno de los desafíos persistentes al integrar MPC con convertidores de puente doble radica en generar las señales de conmutación de manera eficiente. Aquí, la modulación Triple Phase-Shift (TPS) emerge como complemento natural.
+
+Tomando como referencia los avances de Ren et al. \cite{Ren2022} en convertidores DAB, se adaptó TPS al tanque CLCLC. Esta técnica ofrece tres grados de libertad (desplazamientos entre puentes y dentro de cada puente), permitiendo un control más fino del flujo de potencia y una reducción significativa de corrientes circulantes.
+
+Garcés et al. \cite{Garcés2023} aportan evidencia sólida sobre cómo esquemas MPC con garantías de estabilidad (CCS-MPC) mantienen robustez incluso bajo incertidumbre paramétrica. Se incorporaron sus principios para analizar la estabilidad del lazo cerrado combinado, confirmando márgenes de fase y ganancia aceptables en todo el rango operativo previsto.
+
+Particularmente llamativo es el hecho de que la combinación MPC + TPS logra mantener ZVS en un rango mucho más amplio que enfoques convencionales, aunque requiere una implementación cuidadosa para evitar violaciones de constraints en tiempo real.
+
+\subsection{5.3 Implementación en Plataformas Digitales}
+
+Lejos de ser un detalle de ingeniería menor, la implementación digital determina en gran medida el éxito práctico de cualquier estrategia avanzada. Se seleccionó una plataforma híbrida DSP + FPGA para aprovechar las fortalezas de cada dispositivo.
+
+El DSP (Texas Instruments C2000 series) ejecuta el algoritmo MPC principal con un tiempo de muestreo de 20 kHz, mientras que la FPGA se encarga de la generación precisa de señales PWM con resolución sub-nanosegundo y protección por hardware. Esta partición reduce la carga computacional del procesador principal y mejora la confiabilidad.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.92\linewidth]{fig5.png}
+\caption{Diagrama de control digital completo: MPC predictivo, generador TPS, observador de estados y bloques de protección implementados en plataforma DSP+FPGA.}
+\label{fig:diagrama_control}
+\end{figure}
+
+La validación en hardware-in-the-loop previa al prototipo permitió depurar problemas de cuantización y retardos de cómputo. No obstante, cabe matizar que el horizonte de predicción debió limitarse a 4-6 pasos para cumplir con los tiempos de ejecución en el DSP objetivo. Esta restricción, aunque previsible, resalta la necesidad de continuar explorando técnicas de MPC explícito o aproximaciones neurales en futuras iteraciones.
+
+En resumen, el esquema de control digital propuesto no solo cumple con los requerimientos de seguimiento y eficiencia, sino que ofrece una plataforma escalable y reproducible para aplicaciones reales en sistemas de potencia.

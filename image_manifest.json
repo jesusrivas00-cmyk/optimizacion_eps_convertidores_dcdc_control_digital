@@ -1,0 +1,26 @@
+{
+    "fig1.png": {
+        "prompt_ia": "2D technical vector diagram, engineering schematic, flat design, minimalista, fondo blanco puro, colores azul cobalto #0047AB y gris técnico #4A4A4A, sin sombras, sin gradientes, sin texto incrustado..."
+    },
+    "fig2.png": {
+        "prompt_ia": "2D technical vector diagram, engineering schematic, flat design, minimalista, fondo blanco puro, colores azul cobalto #0047AB y gris técnico #4A4A4A con acentos en negro, sin sombras, sin gradientes, sin texto incrustado. Gráfico de líneas mostrando evolución temporal de eficiencia máxima (%) en convertidores DC-DC desde 2018 hasta 2026. Eje X: años, Eje Y: eficiencia 88-99%. Múltiples líneas comparativas para diferentes topologías (Buck, DAB, LLC, CLCLC, Propuesta). Marcadores de puntos de datos, leyenda clara con estilo técnico vectorial IEEE limpio y profesional."
+    },
+    "fig3.png": {
+        "prompt_ia": "2D technical vector diagram, engineering schematic, flat design, minimalista, fondo blanco puro, colores azul cobalto #0047AB y gris técnico #4A4A4A con acentos en negro, sin sombras, sin gradientes, sin texto incrustado. Diagrama de bloques detallado del modelo en estado-espacio para convertidor CLCLC bidireccional. Muestra bloques de integradores para estados (corrientes y voltajes), matrices A, B, C, D, entradas de voltaje de entrada/salida y señales de control de conmutación. Flechas de interconexión claras, estilo IEEE técnico vectorial limpio y profesional."
+    },
+    "fig4.png": {
+        "prompt_ia": "2D technical vector diagram, engineering schematic, flat design, minimalista, fondo blanco puro, colores azul cobalto #0047AB y gris técnico #4A4A4A con acentos en negro, sin sombras, sin gradientes, sin texto incrustado. Esquema completo del convertidor CLCLC bidireccional propuesto: dos full-bridges con MOSFETs SiC, tanque resonante CLCLC claramente etiquetado (L1, C1, Lr, Cr, L2, C2), conexiones de Vin y Vout, flechas de corriente bidireccional. Vista lateral técnica limpia con líneas gruesas para trayectorias de potencia, estilo IEEE vectorial profesional."
+    },
+    "fig5.png": {
+        "prompt_ia": "2D technical vector diagram, engineering schematic, flat design, minimalista, fondo blanco puro, colores azul cobalto #0047AB y gris técnico #4A4A4A con acentos en negro, sin sombras, sin gradientes, sin texto incrustado. Diagrama de bloques del sistema de control digital: bloque MPC principal con cost function, generador de señales Triple Phase-Shift, observador de estados, plataforma DSP+FPGA, bloques de protección y sensores de voltaje/corriente. Flechas claras de flujo de señales, estilo IEEE técnico vectorial limpio y profesional."
+    },
+    "fig6.png": {
+        "prompt_ia": "2D technical vector diagram, engineering schematic, flat design, minimalista, fondo blanco puro, colores azul cobalto #0047AB y gris técnico #4A4A4A con acentos en negro, sin sombras, sin gradientes, sin texto incrustado. Arquitectura completa del EPS optimizado: microgrid DC con paneles PV, turbina eólica, banco de baterías, convertidor CLCLC bidireccional central, cargas DC, bus de distribución, bloques de optimización PSO y control MPC. Flechas bidireccionales de flujo de potencia, capas jerárquicas de control, estilo IEEE técnico vectorial limpio y profesional."
+    },
+    "fig7.png": {
+        "prompt_ia": "2D technical vector diagram, engineering schematic, flat design, minimalista, fondo blanco puro, colores azul cobalto #0047AB y gris técnico #4A4A4A con acentos en negro, sin sombras, sin gradientes, sin texto incrustado. Gráfico de curvas de eficiencia (%) versus potencia de salida (0-1200 W). Múltiples líneas para diferentes condiciones (Vin nominal, Vin min, Vin max) y modos (boost/buck). Marcadores de datos experimentales vs simulación, leyenda clara, estilo IEEE técnico vectorial limpio y profesional."
+    },
+    "fig8.png": {
+        "prompt_ia": "2D technical vector diagram, engineering schematic, flat design, minimalista, fondo blanco puro, colores azul cobalto #0047AB y gris técnico #4A4A4A con acentos en negro, sin sombras, sin gradientes, sin texto incrustado. Diagrama resumen de contribuciones: iconos de alta eficiencia, respuesta dinámica rápida, integración en microgrid, con flechas conectando topología CLCLC, control MPC+TSP y resultados experimentales. Vista conceptual limpia y profesional en estilo IEEE técnico vectorial."
+    }
+}

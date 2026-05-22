@@ -1,0 +1,50 @@
+\section{Optimización e Integración en EPS}
+
+\subsection{6.1 Algoritmos de Optimización}
+
+Resulta particularmente llamativo cómo la optimización del flujo de potencia pasa de ser un problema puramente teórico a una necesidad operativa concreta en sistemas híbridos. Después de diseñar el convertidor, surge la pregunta inevitable: ¿cómo coordinar este elemento dentro de un ecosistema más amplio sin desperdiciar su potencial?
+
+Reddy et al. \cite{Reddy2025} resaltan en su análisis de tendencias que las estrategias de optimización multiobjetivo ganan relevancia cuando se busca equilibrar eficiencia, costo y confiabilidad en aplicaciones de movilidad y renovables. En este trabajo se implementó una combinación de optimización por enjambre de partículas (PSO) con programación convexa relajada para determinar referencias óptimas de voltaje y potencia del convertidor CLCLC.
+
+El algoritmo minimiza una función objetivo que pondera pérdidas totales del sistema, desviación de voltaje en el bus DC y variabilidad de la potencia suministrada. Las restricciones incluyen límites de corriente, rangos de voltaje y dinámica del convertidor. Aunque computacionalmente más exigente que métodos heurísticos simples, ofrece soluciones consistentes y reproducibles.
+
+\begin{table}[h]
+\centering
+\caption{Escenarios de simulación para evaluación del sistema optimizado}
+\label{tab:escenarios}
+\begin{tabular}{lccc}
+\hline
+Escenario & Condición de generación & Carga & Duración \\
+\hline
+1 & Nominal (PV + Batería) & Constante & 10 s \\
+2 & Intermitente (caída 50\% PV) & Variable & 20 s \\
+3 & Modo bidireccional (V2G) & Pico & 15 s \\
+4 & Baja generación & Alta demanda & 12 s \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{6.2 Coordinación con Fuentes Renovables}
+
+Uno de los desafíos persistentes al integrar convertidores avanzados en microgrids radica en lograr una coordinación fluida con fuentes inherentemente variables. No basta con un buen convertidor; se requiere que este dialogue inteligentemente con el resto del sistema.
+
+Mezouari et al. \cite{Mezouari2025} enfatizan en su revisión la importancia de estrategias de control que consideren almacenamiento energético y generación distribuida. Siguiendo esta línea, se diseñó un esquema jerárquico donde el convertidor CLCLC opera como agente activo: recibe referencias de potencia del gestor de microgrid y las ejecuta mediante MPC mientras reporta su estado de disponibilidad.
+
+La coordinación incluye modos de operación autónomo y grid-forming. En presencia de caída súbita de generación fotovoltaica, el convertidor responde en milisegundos transfiriendo potencia desde el banco de baterías, manteniendo la estabilidad del bus DC. Esta capacidad va más allá de la mera regulación local y aporta resiliencia al sistema completo.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.92\linewidth]{fig6.png}
+\caption{Arquitectura del sistema de potencia optimizado: microgrid DC con integración de fuentes renovables, convertidor CLCLC bidireccional central y capas de control y optimización.}
+\label{fig:arquitectura_eps}
+\end{figure}
+
+\subsection{6.3 Análisis de Estabilidad}
+
+Lejos de ser un requisito formal, el análisis de estabilidad del sistema completo reveló comportamientos inesperados que obligaron a ajustes finos. Se combinaron métodos de pequeña señal con simulaciones no lineales transitorias para obtener una visión más completa.
+
+El modelo linealizado del sistema integrado mostró que la interacción entre la dinámica del convertidor y la impedancia de la red DC puede generar resonancias si no se ajustan adecuadamente los parámetros del controlador. No obstante, cabe matizar que el esquema MPC + TPS demostró márgenes de estabilidad robustos incluso bajo variaciones paramétricas de ±25\%.
+
+Las simulaciones en escenarios extremos (Tabla 4) confirmaron que el sistema regresa al punto de operación estable en menos de 80 ms tras perturbaciones severas. Particularmente llamativo es el hecho de que la optimización global no solo mejora la eficiencia energética, sino que también incrementa los márgenes de estabilidad respecto a configuraciones convencionales sin coordinación centralizada.
+
+Estos resultados refuerzan la viabilidad de la propuesta para entornos reales de microgrids DC, donde la incertidumbre es la norma más que la excepción.

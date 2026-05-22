@@ -1,0 +1,41 @@
+\section{Modelado Matemático de Convertidores DC-DC}
+
+\subsection{3.1 Modelado de Convertidores Bidireccionales}
+
+Construir un modelo que capture fielmente el comportamiento dinámico de un convertidor bidireccional no es tarea trivial. Después de años observando cómo las simplificaciones excesivas llevan a discrepancias entre simulación y banco de pruebas, optamos por un enfoque en variables de estado completo.
+
+El convertidor CLCLC propuesto se modela considerando los cuatro elementos resonantes principales junto con los inductores de entrada y salida. Se definen los estados como corrientes en inductores y voltajes en capacitores, resultando en un sistema de orden elevado que refleja mejor la realidad física.
+
+\begin{equation}
+\label{eq:state_space}
+\dot{\mathbf{x}} = A\mathbf{x} + B\mathbf{u}, \quad \mathbf{y} = C\mathbf{x} + D\mathbf{u}
+\end{equation}
+
+Donde el vector de estado \(\mathbf{x}\) incluye \([i_{L1}, v_{C1}, i_{L2}, v_{C2}, i_{Lr}, v_{Cr}, \dots]^T\). La matriz \(A\) incorpora los parámetros de los componentes y la topología resonante. Este modelo (Eq. 1) sirve de base para todo el análisis posterior y permite simular tanto modo boost como buck con un solo framework.
+
+El modelo distingue claramente los intervalos de conmutación, considerando las diferentes configuraciones de los puentes activos. Esta aproximación piecewise-lineal, aunque más laboriosa, evita las sorpresas habituales que aparecen cuando se emplean promedios simplificados en convertidores resonantes.
+
+\subsection{3.2 Análisis de Pequeña Señal}
+
+Resulta revelador observar cómo un buen modelo en estado-espacio pierde valor si no se complementa con herramientas de análisis linealizado. El análisis de pequeña señal (SSA) permite entender el comportamiento del convertidor alrededor del punto de operación y diseñar controladores estables.
+
+Siguiendo aproximaciones validadas experimentalmente como las presentadas por Hassan et al. \cite{Hassan2026}, se derivó el modelo linealizado perturbando las ecuaciones de estado alrededor del punto de equilibrio. Las transferencias obtenidas revelan polos y ceros que explican resonancias esperadas y algunas no tan obvias derivadas de la interacción entre los tanques resonantes.
+
+Particularmente llamativo es el hecho de que el sistema exhibe un par de polos complejos conjugados cercanos al eje imaginario, lo que sugiere una respuesta oscilatoria amortiguada que debe ser cuidadosamente controlada. El SSA facilitó la identificación de estas dinámicas y guió la selección de ganancias y frecuencias de cruce en etapas posteriores.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.92\linewidth]{fig3.png}
+\caption{Diagrama de bloques del modelo en estado-espacio del convertidor CLCLC bidireccional, mostrando interconexiones entre estados, entradas de control y salidas de voltaje y corriente.}
+\label{fig:diagrama_modelo}
+\end{figure}
+
+\subsection{3.3 Incorporación de Pérdidas}
+
+Lejos de ser un detalle secundario, la inclusión rigurosa de pérdidas marca la diferencia entre un modelo académico y uno verdaderamente útil para diseño. Resistencias parásitas de inductores y capacitores, caídas en semiconductores y pérdidas por histéresis se incorporaron explícitamente en las matrices de estado.
+
+Esta extensión incrementa el realismo pero complica el análisis analítico. En muchos casos estudiados, los investigadores tienden a subestimar el impacto acumulado de estas pérdidas en la eficiencia global y en la ubicación de los polos. Aquí se optó por un balance: mantener el modelo completo para simulación y desarrollar versiones reducidas para control.
+
+Garcés et al. \cite{Garcés2023} demuestran cómo garantizar estabilidad en esquemas MPC incluso con modelos de orden medio-alto. Sus resultados sirvieron de referencia para validar la robustez del modelo propuesto frente a variaciones paramétricas (±20\% en inductancias y capacitancias), confirmando que las dinámicas dominantes se preservan razonablemente.
+
+No obstante, cabe matizar que el modelo sigue siendo sensible a parámetros que varían con temperatura y corriente, aspecto que se abordará mediante control adaptativo en trabajos futuros. La validación cruzada entre el modelo extendido y simulaciones en PSIM mostró errores inferiores al 4\% en formas de onda de corriente y voltaje, lo que otorga confianza suficiente para avanzar hacia el diseño del controlador digital.
